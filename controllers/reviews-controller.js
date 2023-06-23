@@ -15,7 +15,7 @@ const getReview = async (req, res) => {
   const owner = req.user._id;
   const filter = { owner };
 
-  const result = await Review.find(filter, "-createdAt -updatedAt").populate("owner", "name avatarURL");
+  const result = await Review.findOne(filter, "-createdAt -updatedAt").populate("owner", "name avatarURL");
   res.json(result);
 };
 
