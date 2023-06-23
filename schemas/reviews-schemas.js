@@ -7,7 +7,7 @@ const reviewSchema = new Schema(
   {
     content: {
       type: String,
-      required: [true, "Set content for review"],
+      default: "",
     },
     rating: {
       type: Number,
@@ -31,9 +31,7 @@ const reviewSchema = new Schema(
 reviewSchema.post("save", handleMongooseError);
 
 const reviewAddSchema = Joi.object({
-  content: Joi.string().required().messages({
-    "any.required": "missing required content field",
-  }),
+  content: Joi.string(),
   rating: Joi.number().integer().min(0).max(5).required().messages({
     "any.required": "missing required rating field",
   }),
