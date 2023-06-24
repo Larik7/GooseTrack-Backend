@@ -4,22 +4,22 @@ const { HttpError } = require("../helpers");
 const { ctrlWrapper } = require("../decorators");
 
 const getTasksPerMonth = async (req, res) => {
-  const result = 0;
+  const result = 1;
   res.json(result);
 };
 
 const addTask = async (req, res) => {
-  const result = 0;
+  const result = 2;
   res.json(result);
 };
 
 const updateTask = async (req, res) => {
-  const result = 0;
+  const result = 3;
   res.json(result);
 };
 
 const deleteTask = async (req, res) => {
-  const result = 0;
+  const result = 4;
   res.json(result);
 };
 

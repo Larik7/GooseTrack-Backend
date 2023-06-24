@@ -5,6 +5,7 @@ require("dotenv").config()
 
 //const userRouter = require("./routes/api/auth-routers")
 const reviewsRouter = require('./routes/api/reviews-routes');
+const tasksRouter = require('./routes/api/tasks-routes');
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 
 //app.use('/api/auth-routers', userRouter)
 app.use('/api/reviews', reviewsRouter);
+app.use('/api/tasks', tasksRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
