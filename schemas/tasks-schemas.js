@@ -29,6 +29,12 @@ const taskSchema = new Schema(
       type: String,
       match: timeRegexp,
       required: [true, "Set end time for task"],
+      validate: {
+        validator: function (val) {
+          return (val > this.start);
+        },
+        message: "End time {VALUE} must be > than start time!",
+      },
     },
     priority: {
       type: String,
@@ -40,7 +46,12 @@ const taskSchema = new Schema(
       enum: categoryList,
       required: [true, "Set category for task"],
     },
-},
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+  },
   { versionKey: false, timestamps: true }
 );
 
