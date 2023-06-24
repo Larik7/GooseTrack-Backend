@@ -65,8 +65,6 @@ const authenticate = async (req, res, next) => {
 
 const router = express.Router();
 
-router.use(authenticate);
-
 router.get("/", reviewsController.getAllReviews);
 
 router.get("/own", authenticate, reviewsController.getReview);
