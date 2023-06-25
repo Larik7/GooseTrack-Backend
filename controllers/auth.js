@@ -7,8 +7,9 @@ const Jimp = require('jimp');
 const { nanoid } = require('nanoid');
 
 const EmailVerifycation = { status: true, title: 'verifycation' };
-const { User } = require('../../models/user');
-const { HttpError, ctrlWrapper, sendEmail } = require('../../helpers');
+const { User } = require('../models/user');
+const { HttpError, sendEmail } = require('../helpers');
+const { ctrlWrapper } = require('../decorators');
 const { PROJECT_URL } = process.env;
 
 const avatarDir = path.join(__dirname, '../', '../', 'public', 'avatars');
