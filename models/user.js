@@ -19,7 +19,7 @@ const userSchema = new Schema(
     name: {
       type: String,
       minLength: [2, 'must be min 2 sybols'],
-      maxLength: [16, 'maximum 16 symbols'],
+      maxLength: [28, 'maximum 25 symbols'],
       required: [true, 'What`s your name?'],
     },
     password: {
@@ -47,9 +47,15 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    token: { type: String, default: '' },
+    accessToken: { type: String, default: '' },
+    refreshToken: { type: String, default: '' },
     avatarURL: {
       type: String,
+      default: '',
+    },
+    avatarID: {
+      type: String,
+      default: '',
     },
     verify: {
       type: Boolean,
@@ -57,7 +63,7 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      required: [true, 'Verify token is required'],
+      // required: [true, 'Verify token is required'],
     },
   },
   {
@@ -65,6 +71,7 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+//----------------------------------------------------------------------
 
 const User = model('user', userSchema);
 

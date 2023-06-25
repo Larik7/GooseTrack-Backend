@@ -1,12 +1,12 @@
 const express = require('express');
-const userCtrl = require('../../controllers/auth');
+const userCtrl = require('../../controllers/auth/user');
 const {
   validateBody,
   auth,
   uploder,
   uploadCloud,
   passport,
-} = require('../../decorators');
+} = require('../../middlewares');
 const {
   registrationSchema,
   loginSchema,
