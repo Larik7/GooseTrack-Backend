@@ -4,7 +4,13 @@ const { HttpError } = require("../helpers");
 const { ctrlWrapper } = require("../decorators");
 
 const getTasksPerMonth = async (req, res) => {
-  const result = 1;
+  const owner = req.user._id;
+  const { page = 1, limit = 1000 } = req.query;
+  const skip = (page - 1) * limit;
+  
+  const filter = { owner };
+
+  const result = await Task.find(filter, "-createdAt -updatedAt", { skip, limit }).populate("owner", "name");
   res.json(result);
 };
 
