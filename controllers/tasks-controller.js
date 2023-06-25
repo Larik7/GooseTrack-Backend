@@ -9,12 +9,19 @@ const getTasksPerMonth = async (req, res) => {
 };
 
 const addTask = async (req, res) => {
-  const result = 2;
-  res.json(result);
+  const owner = req.user._id;
+  const result = await Task.create({ ...req.body, owner });
+  res.status(201).json(result);
 };
 
 const updateTask = async (req, res) => {
-  const result = 3;
+  const { id } = req.params;
+  const owner = req.user._id;
+
+  const result = await Task.findOneAndUpdate({ _id: id, owner }, req.body, { new: true });
+  if (!result) {
+    throw HttpError(404, `Task with id = ${id} for user with id = ${owner} not found`);
+  }
   res.json(result);
 };
 
