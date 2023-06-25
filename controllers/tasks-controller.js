@@ -26,7 +26,13 @@ const updateTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  const result = 4;
+  const { id } = req.params;
+  const owner = req.user._id;
+
+  const result = await Task.findOneAndDelete({ _id: id, owner });
+  if (!result) {
+    throw HttpError(404, `Task with id = ${id} for user with id = ${owner} not found`);
+  }
   res.json(result);
 };
 
