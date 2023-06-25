@@ -6,6 +6,8 @@ const schemas = require("../../schemas/tasks-schemas");
 
 const { validateBody } = require("../../decorators");
 
+const { isValidId } = require("../../middlewares");
+
 // !?! - заглушка
 // const { authenticate } = require("../../middlewares");
 
@@ -24,10 +26,10 @@ router.get("/", tasksController.getTasksPerMonth);
 
 router.post("/", validateBody(schemas.taskAddSchema), tasksController.addTask);
 
-router.put("/:id", validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
+router.put("/:id", isValidId, validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
 
-router.patch("/:id", validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
+router.patch("/:id", isValidId, validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
 
-router.delete("/:id", tasksController.deleteTask);
+router.delete("/:id", isValidId, tasksController.deleteTask);
 
 module.exports = router;
