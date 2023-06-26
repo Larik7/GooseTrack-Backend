@@ -1,7 +1,6 @@
 const { Task } = require("../models/tasks");
 
-const { HttpError } = require("../helpers");
-const { ctrlWrapper } = require("../decorators");
+const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getTasksPerMonth = async (req, res) => {
   const owner = req.user._id;
