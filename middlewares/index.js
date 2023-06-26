@@ -1,7 +1,15 @@
-const authenticate = require("./authenticate");
-const isValidId = require("./isValidId");
+const { validateBody } = require('./validateBody');
+const { validateQuery } = require('./validateQuery');
+const auth = require('./auth');
+const { uploder, uploadCloud, cloudinary } = require('./uploader');
+const passport = require('./passport');
 
 module.exports = {
-  authenticate,
-  isValidId,
+  validateBody,
+  auth,
+  uploder,
+  uploadCloud,
+  validateQuery,
+  cloudinary,
+  passport,
 };
