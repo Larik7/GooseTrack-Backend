@@ -34,8 +34,7 @@ const registration = async (req, res) => {
     <p>Hello, thanks for signing up for our service. Please verify your email by clicking the link below:</p>
     <p><a href="${BASE_URL}/api/auth/verify/${verifycationCode}">Start your plans</a></p>
     <p>If you did not sign up for this account, you can ignore this email.</p>
-    <p>Thanks,</p>
-    <p>Your S&M CODERS Team</p>
+    
 `;
 
   if (EmailVerifycation.status == true) {
