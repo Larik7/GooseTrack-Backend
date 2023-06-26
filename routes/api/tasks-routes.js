@@ -6,7 +6,14 @@ const schemas = require("../../schemas/tasks-schemas");
 
 const { validateBody } = require("../../decorators");
 
-const { authenticate, isValidId } = require("../../middlewares");
+const { isValidId } = require("../../middlewares");
+//const { authenticate, isValidId } = require("../../middlewares");
+// !?! - заглушка, удалить
+const authenticate = async (req, res, next) => {
+  req.user = { _id: '12345' };
+  next();
+};
+// !?!
 
 const router = express.Router();
 
