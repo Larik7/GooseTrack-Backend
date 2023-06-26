@@ -1,0 +1,48 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "GooseTrack",
+    "description": "[**GooseTrack**](https://larik7.github.io/GooseTrack-Frontend/) is ?!? Описание проекта ?!?"
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }, { "url": "https://goosetrackback.onrender.com" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Reviews",
+      "description": "Reviews endpoints"
+    },
+    {
+      "name": "Tasks",
+      "description": "Tasks endpoints"
+    }
+  ],
+
+  "paths": {
+
+    "/api/auth": {
+    },
+
+    "/api/reviews": {
+    },
+
+    "/api/reviews/own": {
+    },
+
+    "/api/tasks": {
+    },
+
+    "/api/tasks/{id}": {
+    }
+
+  },
+
+  "components": {
+    
+  }
+}
