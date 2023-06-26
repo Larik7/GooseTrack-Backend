@@ -4,20 +4,11 @@ const tasksController = require("../../controllers/tasks-controller");
 
 const schemas = require("../../schemas/tasks-schemas");
 
-const { validateBody } = require("../../decorators");
-
-const { isValidId } = require("../../middlewares");
-//const { authenticate, isValidId } = require("../../middlewares");
-// !?! - заглушка, удалить
-const authenticate = async (req, res, next) => {
-  req.user = { _id: '12345' };
-  next();
-};
-// !?!
+const { auth, validateBody, isValidId } = require("../../middlewares");
 
 const router = express.Router();
 
-router.use(authenticate);
+router.use(auth);
 
 router.get("/", tasksController.getTasksPerMonth);
 

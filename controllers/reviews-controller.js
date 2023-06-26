@@ -1,7 +1,6 @@
 const { Review } = require("../models/reviews");
 
-const { HttpError } = require("../helpers");
-const { ctrlWrapper } = require("../decorators");
+const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getAllReviews = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;

@@ -1,7 +1,6 @@
-//h 12 to s 60s*60m*12
-const { HttpError } = require('../helpers');
+const { HttpError } = require("../helpers");
 
-const validateBody = schema => {
+const validateBody = (schema) => {
   const func = (req, res, next) => {
     const { error } = schema.validate(req.body);
     if (error) {
@@ -9,7 +8,8 @@ const validateBody = schema => {
     }
     next();
   };
+
   return func;
 };
 
-module.exports = { validateBody };
+module.exports = validateBody;
