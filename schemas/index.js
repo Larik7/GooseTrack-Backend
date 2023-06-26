@@ -6,12 +6,6 @@ const {
   refreshSchema,
   passSchema,
 } = require('./user');
-const {
-  createTaskValidation,
-  updateTaskValidation,
-  listTasksPerMonth,
-} = require('./taskValidationSchema');
-const { reveiwSchema, updateRewSchema } = require('./review');
 
 module.exports = {
   registrationSchema,
@@ -19,10 +13,6 @@ module.exports = {
   emailSchema,
   refreshSchema,
   passSchema,
-  createTaskValidation,
-  updateTaskValidation,
   updateUserSchema,
-  reveiwSchema,
-  updateRewSchema,
-  listTasksPerMonth,
+ 
 };
