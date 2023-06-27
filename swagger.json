@@ -33,7 +33,7 @@
         "tags": [
           "Reviews"
         ],
-        "summary": "Returns a list of all reviews.",
+        "summary": "Returns a list of all reviews",
         "parameters": [
           {
             "in": "query",
@@ -121,7 +121,7 @@
         "tags": [
           "Reviews"
         ],
-        "summary": "Returns current user's review.",
+        "summary": "Returns current user's review",
         "parameters": [],
         "security": [
           {
@@ -203,7 +203,7 @@
           }
         ],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Review object",
           "required": true,
           "content": {
             "application/json": {
@@ -280,7 +280,7 @@
         "tags": [
           "Reviews"
         ],
-        "summary": "Updates an existing current user's review.",
+        "summary": "Updates an existing review of current user",
         "parameters": [],
         "security": [
           {
@@ -288,7 +288,7 @@
           }
         ],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Review object",
           "required": true,
           "content": {
             "application/json": {
@@ -365,7 +365,7 @@
         "tags": [
           "Reviews"
         ],
-        "summary": "Deletes an existing current user's review.",
+        "summary": "Deletes an existing review of current user",
         "parameters": [],
         "security": [
           {
@@ -456,7 +456,7 @@
         "properties": {
           "rating": {
             "type": "integer",
-            "description": "Rating."
+            "description": "Rating"
           },
           "comment": {
             "type": "string",
@@ -576,7 +576,7 @@
         "properties": {
           "rating": {
             "type": "number",
-            "description": "Rating."
+            "description": "Rating"
           },
           "comment": {
             "type": "string",
