@@ -38,7 +38,7 @@
           {
             "in": "query",
             "name": "limit",
-            "example": 10,
+            "example": 20,
             "schema": {
               "type": "number"
             }
@@ -50,11 +50,6 @@
             "schema": {
               "type": "number"
             }
-          }
-        ],
-        "security": [
-          {
-            "Bearer": []
           }
         ],
         "responses": {
@@ -103,7 +98,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/unauthorizedResponse"
+                  "$ref": "#/components/schemas/notFoundResponse"
                 }
               }
             }
@@ -128,6 +123,11 @@
         ],
         "summary": "Returns current user's review.",
         "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -174,7 +174,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/unauthorizedResponse"
+                  "$ref": "#/components/schemas/notFoundResponse"
                 }
               }
             }
@@ -259,7 +259,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/unauthorizedResponse"
+                  "$ref": "#/components/schemas/notFoundResponse"
                 }
               }
             }
@@ -276,7 +276,7 @@
           }
         }
       },
-      "put": {
+      "patch": {
         "tags": [
           "Reviews"
         ],
@@ -344,7 +344,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/unauthorizedResponse"
+                  "$ref": "#/components/schemas/notFoundResponse"
                 }
               }
             }
@@ -373,18 +373,12 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Deleted successfully!"
-                    }
-                  }
+                  "$ref": "#/components/schemas/createReviewResponse"
                 }
               }
             }
@@ -424,7 +418,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/unauthorizedResponse"
+                  "$ref": "#/components/schemas/notFoundResponse"
                 }
               }
             }
@@ -452,6 +446,223 @@
   },
 
   "components": {
-    
+    "schemas": {
+      "createReviewRequest": {
+        "type": "object",
+        "required": [
+          "rating",
+          "required"
+        ],
+        "properties": {
+          "rating": {
+            "type": "integer",
+            "description": "Rating."
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "The best application :-)"
+          }
+        }
+      },
+      "createReviewResponse": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "The best application :-)"
+          },
+          "rating": {
+            "type": "integer"
+          },
+          "owner": {
+            "type": "string",
+            "example": "649ab7f56f47f612c3a16173"
+          },
+          "_id": {
+            "type": "string",
+            "example": "649abce1edd160c16a812c59"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-06-27T10:41:37.790Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-06-27T10:41:37.790Z"
+          }
+        }
+      },
+      "getAllReviewsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "649abce1edd160c16a812c59",
+              "description": "Review ID"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Comment",
+              "example": "The best application :-)"
+            },
+            "rating": {
+              "type": "integer"
+            },
+            "owner": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "649ab7f56f47f612c3a16173",
+                  "description": "User ID"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "User",
+                  "description": "User Name"
+                },
+                "avatarURL": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getReviewResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "649abce1edd160c16a812c59",
+            "description": "Review ID"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "The best application :-)"
+          },
+          "rating": {
+            "type": "integer"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "649ab7f56f47f612c3a16173",
+                "description": "User ID"
+              },
+              "name": {
+                "type": "string",
+                "example": "User",
+                "description": "User Name"
+              },
+              "avatarURL": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "updateReviewRequest": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Rating."
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment",
+            "example": "The best application :-)"
+          }
+        }
+      },
+
+      "badRequestResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Bad Request"
+        }
+      },
+      "unauthorizedResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Unauthorized"
+        }
+      },
+      "notFoundResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Not found"
+        }
+      },
+      "forbiddenResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Forbidden"
+        }
+      },
+      "conflictResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Conflict"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
 }
