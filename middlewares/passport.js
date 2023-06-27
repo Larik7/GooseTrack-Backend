@@ -27,7 +27,7 @@ const googleCallback = async (
     const { email, displayName } = profile;
     const user = await User.findOne({ email });
     if (user) {
-      return done(null, user); //(user) ==== req.user
+      return done(null, user);
     }
     const pass = nanoid(15);
     const password = await bcrypt.hash(pass, 10);
@@ -41,9 +41,7 @@ const googleCallback = async (
 
     const letter = `<h1>Welcome to Goose-Track</h1>
     <p>Hello, thanks for signing up for our service. Here is your account password: <b>${pass}</b></p>
-    <p>You can always change it in your account settings</p>
-    <p>Thanks,</p>
-    <p>Your S&M CODERS Team</p>`;
+    <p>You can always change it in your account settings</p>`;
 
     await sendEmail(email, 'Welcome to Goose-Track', letter);
     done(null, newUser);
