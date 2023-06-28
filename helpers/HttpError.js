@@ -1,4 +1,4 @@
-const errorMessageLis = {
+const messages = {
   400: 'Bad Request',
   401: 'Unauthorized',
   403: 'Forbidden',
@@ -6,7 +6,7 @@ const errorMessageLis = {
   409: 'Conflict',
 };
 
-const HttpError = (status, message = errorMessageLis[status]) => {
+const HttpError = (status, message = messages[status]) => {
   const error = new Error(message);
   error.status = status;
   return error;
