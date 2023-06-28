@@ -32,7 +32,7 @@ reviewSchema.post("save", handleMongooseError);
 
 const reviewAddSchema = Joi.object({
   comment: Joi.string(),
-  rating: Joi.number().integer().min(0).max(5).required().errorMessageLis({
+  rating: Joi.number().integer().min(0).max(5).required().messages({
     "any.required": "missing required rating field",
   }),
 });
