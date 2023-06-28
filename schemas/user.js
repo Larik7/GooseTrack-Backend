@@ -16,19 +16,19 @@ const registrationSchema = Joi.object({
   name: Joi.string().max(28).required(),
   email: Joi.string().pattern(EMAIL_REGEXP).required(),
   password: Joi.string().pattern(PASSWORD_REGEXP).required(),
-  birthday: Joi.date().format('YYYY-MM-DD').optional(),
-  phone: Joi.string().min(3).max(20).pattern(PHONE_REGEXP).optional(),
-  skype: Joi.string().max(16),
-  token: Joi.string().default(''),
+  // birthday: Joi.date().format('YYYY-MM-DD').optional(),
+  // phone: Joi.string().min(3).max(20).pattern(PHONE_REGEXP).optional(),
+  // skype: Joi.string().max(16),
+  // token: Joi.string().default(''),
 });
 
 const updateUserSchema = Joi.object({
   name: Joi.string().max(28),
   email: Joi.string().pattern(EMAIL_REGEXP),
   password: Joi.string().pattern(PASSWORD_REGEXP),
-  birthday: Joi.date().format('YYYY-MM-DD').allow('').optional(),
-  phone: Joi.string().max(20).pattern(PHONE_REGEXP).allow('').optional(),
-  skype: Joi.string().max(16).allow(''),
+  // birthday: Joi.date().format('YYYY-MM-DD').allow('').optional(),
+  // phone: Joi.string().max(20).pattern(PHONE_REGEXP).allow('').optional(),
+  // skype: Joi.string().max(16).allow(''),
 });
 
 const loginSchema = Joi.object({
