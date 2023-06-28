@@ -4,9 +4,11 @@
     "version": "1.2.0",
     "title": "GooseTrack",
 
-    "description": "[**GooseTrack**](https://stig89.github.io/GooseTrack-frontend) is an intuitive calendar app that helps you plan and complete tasks efficiently. Whether you need to create a new task, update an existing one, or delete one, GooseTrack provides easy access to all of these options. In addition, you can easily extract the list of tasks for any selected month to keep track of your schedule.</br></br>One of the special benefits of **GooseTrack** is the ability to customize your profile. Update your information, upload an avatar to make it more personal. We value your feedback, which is why **GooseTrack** provides a handy feedback feature where you can share your thoughts, suggest improvements, or simply express gratitude. Your feedback is a valuable contribution to the development of our application.</br></br>So, whether you need to optimize your calendar usage, organize your schedule, and manage your tasks, **GooseTrack** is your ideal choice. A user-friendly interface allows you to make the most of the calendar application and control your busy life. You can start using this amazing app right now.You can find additional information and details in the [repository](https://github.com/Larik7/GooseTrack-Backend) of this [application](https://github.com/Larik7/GooseTrack-Frontend). Enter the world of organization and better planning with **GooseTrack** today!"
+    "description": "[**GooseTrack**](https://larik7.github.io/GooseTrack-Frontend/) is an intuitive calendar app that helps you plan and complete tasks efficiently. Whether you need to create a new task, update an existing one, or delete one, GooseTrack provides easy access to all of these options. In addition, you can easily extract the list of tasks for any selected month to keep track of your schedule.</br></br>One of the special benefits of **GooseTrack** is the ability to customize your profile. Update your information, upload an avatar to make it more personal. We value your feedback, which is why **GooseTrack** provides a handy feedback feature where you can share your thoughts, suggest improvements, or simply express gratitude. Your feedback is a valuable contribution to the development of our application.</br></br>So, whether you need to optimize your calendar usage, organize your schedule, and manage your tasks, **GooseTrack** is your ideal choice. A user-friendly interface allows you to make the most of the calendar application and control your busy life. You can start using this amazing app right now.You can find additional information and details in the [repository](https://github.com/Larik7/GooseTrack-Backend) of this [application](https://github.com/Larik7/GooseTrack-Frontend). Enter the world of organization and better planning with **GooseTrack** today!"
 },
-  "servers": [{ "url": "http://localhost:3000" }, { "url": "https://goosetrackback.onrender.com" }],
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https://goosetrackback.onrender.com" }, { "url": "http://localhost:3000" }],
   "tags": [
     {
       "name": "Auth",
@@ -687,6 +689,9 @@
       }
     },
 
+
+
+
     "/api/reviews": {
       "get": {
         "tags": [
@@ -775,6 +780,8 @@
         }
       }
     },
+
+
     "/api/reviews/own": {
       "get": {
         "tags": [
@@ -1095,6 +1102,7 @@
         }
       }
     },
+
 
 
 
@@ -1635,6 +1643,10 @@
           }
         }
       },
+
+
+
+
       "createReviewRequest": {
         "type": "object",
         "required": [
@@ -1666,11 +1678,11 @@
           },
           "owner": {
             "type": "string",
-            "example": "649ab7f56f47f612c3909056"
+            "example": "649ab7f56f47f612c3a16173"
           },
           "_id": {
             "type": "string",
-            "example": "649abce1edd160c16a479866"
+            "example": "649abce1edd160c16a812c59"
           },
           "createdAt": {
             "type": "string",
@@ -1691,13 +1703,13 @@
           "properties": {
             "_id": {
               "type": "string",
-              "example": "649abce1edd160c1665636",
+              "example": "649abce1edd160c16a812c59",
               "description": "Review ID"
             },
             "comment": {
               "type": "string",
               "description": "Comment",
-              "example": "The best application"
+              "example": "The best application :-)"
             },
             "rating": {
               "type": "integer"
@@ -1773,6 +1785,7 @@
           }
         }
       },
+
 
 
 
@@ -2014,6 +2027,7 @@
         }
       },
 
+      
 
 
       "badRequestResponse": {
