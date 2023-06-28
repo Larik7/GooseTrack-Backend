@@ -586,6 +586,248 @@
         }
       },
 
+
+
+      "createTaskRequest": {
+        "type": "object",
+        "required": [
+          "title",
+          "date",
+          "start",
+          "end",
+          "priority",
+          "category"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of a task.",
+            "example": "Task 01"
+          },
+          "date": {
+            "type": "string",
+            "description": "Day on which to schedule a task. In format YYYY-MM-DD",
+            "example": "2023-06-28"
+          },
+          "start": {
+            "type": "string",
+            "description": "Start time. In `HH:mm` format.",
+            "example": "09:00"
+          },
+          "end": {
+            "type": "string",
+            "description": "End time. In `HH:mm` format. Must be greater than `start`.",
+            "example": "17:00"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority of a task. Possible values: `\"low\", \"medium\", \"high\"`",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "medium"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "to-do",
+              "in-progress",
+              "done"
+            ],
+            "description": "Category of a task. Possible values: `\"to-do\", \"in-progress\", \"done\"`",
+            "example": "to-do"
+          }
+        }
+      },
+      "createTaskResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            },
+            "end": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "to-do",
+                "in-progress",
+                "done"
+              ]
+            },
+            "owner": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "example": {
+          "_id": "649c047292471fc32c3964ec",
+          "title": "Task 01",
+          "date": "2023-08-30",
+          "start": "09:00",
+          "end": "10:00",
+          "priority": "medium",
+          "category": "to-do",
+          "owner": "649ab7f56f47f612c3a16173",
+          "createdAt": "2023-06-28T09:59:14.548Z",
+          "updatedAt": "2023-06-28T09:59:14.548Z"
+        }
+      },
+      "searchTaskResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            },
+            "end": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "to-do",
+                "in-progress",
+                "done"
+              ]
+            },
+            "owner": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "649ab7f56f47f612c3a16173",
+                  "description": "User ID"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "User",
+                  "description": "User Name"
+                }
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "example": {
+          "_id": "649c047292471fc32c3964ec",
+          "title": "Task 01",
+          "date": "2023-08-30",
+          "start": "09:00",
+          "end": "10:00",
+          "priority": "medium",
+          "category": "to-do",
+          "owner": {
+            "_id": "649ab7f56f47f612c3a16173",
+            "name": "User Name"
+          }, 
+          "createdAt": "2023-06-28T09:59:14.548Z",
+          "updatedAt": "2023-06-28T09:59:14.548Z"
+        }
+      },
+      "updateTaskRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of a task.",
+            "example": "Task 01"
+          },
+          "date": {
+            "type": "string",
+            "description": "Day on which to schedule a task. In format YYYY-MM-DD",
+            "example": "2023-06-28"
+          },
+          "start": {
+            "type": "string",
+            "description": "Start time. In `HH:mm` format.",
+            "example": "09:00"
+          },
+          "end": {
+            "type": "string",
+            "description": "End time. In `HH:mm` format. Must be greater than `start`.",
+            "example": "17:00"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority of a task. Possible values: `\"low\", \"medium\", \"high\"`",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "medium"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "to-do",
+              "in-progress",
+              "done"
+            ],
+            "description": "Category of a task. Possible values: `\"to-do\", \"in-progress\", \"done\"`",
+            "example": "to-do"
+          }
+        }
+      },
+
+
+
       "badRequestResponse": {
         "type": "object",
         "items": {
