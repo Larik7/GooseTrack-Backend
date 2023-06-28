@@ -7,7 +7,7 @@
     "description": "[**GooseTrack**](https://larik7.github.io/GooseTrack-Frontend/) is an intuitive calendar app that helps you plan and complete tasks efficiently. Whether you need to create a new task, update an existing one, or delete one, GooseTrack provides easy access to all of these options. In addition, you can easily extract the list of tasks for any selected month to keep track of your schedule.</br></br>One of the special benefits of **GooseTrack** is the ability to customize your profile. Update your information, upload an avatar to make it more personal. We value your feedback, which is why **GooseTrack** provides a handy feedback feature where you can share your thoughts, suggest improvements, or simply express gratitude. Your feedback is a valuable contribution to the development of our application.</br></br>So, whether you need to optimize your calendar usage, organize your schedule, and manage your tasks, **GooseTrack** is your ideal choice. A user-friendly interface allows you to make the most of the calendar application and control your busy life. You can start using this amazing app right now.You can find additional information and details in the [repository](https://github.com/Larik7/GooseTrack-Backend) of this [application](https://github.com/Larik7/GooseTrack-Frontend). Enter the world of organization and better planning with **GooseTrack** today!"
 },
   "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json"],
+  "produces": ["application/json; charset=utf-8"],
   "servers": [{ "url": "https://goosetrackback.onrender.com" }, { "url": "http://localhost:3000" }],
   "tags": [
     {
@@ -1479,11 +1479,15 @@
       "RegistrationRequest": {
         "type": "object",
         "required": [
+          "name",
           "email",
-          "password",
-          "name"
-        ],
+          "password"
+          ],
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -1493,26 +1497,6 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
-          },
-          "name": {
-            "type": "string",
-            "description": "User's name"
-          },
-          "birthday": {
-            "type": "string",
-            "description": "Day of birthday in `YYYY-MM-DD` format",
-            "example": "2000-01-01"
-          },
-          "phone": {
-            "type": "string",
-            "description": "Phone number"
-          },
-          "skype": {
-            "type": "string",
-            "description": "Skype"
-          },
-          "token": {
-            "type": "number"
           }
         }
       },
