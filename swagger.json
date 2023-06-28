@@ -1643,7 +1643,7 @@
           }
         }
       },
-    "refreshRequest": {
+      "refreshRequest": {
         "type": "object",
         "required": [
           "refreshToken"
@@ -1674,20 +1674,6 @@
             "type": "string",
             "example": "eyJcsa15c1sa515csa54....."
           }
-        }
-      },
-      "unauthorizedResponse": {
-        "type": "object",
-        "items": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string"
-            }
-          }
-        },
-        "example": {
-          "message": "Unauthorized"
         }
       },
       "verifyResponse": {
@@ -2149,7 +2135,7 @@
         }
       },
 
-      
+
 
 
       "badRequestResponse": {
@@ -2223,6 +2209,8 @@
         }
       }
     },
+
+    
     "securitySchemes": {
       "Bearer": {
         "type": "http",
