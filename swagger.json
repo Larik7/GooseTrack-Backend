@@ -1643,7 +1643,129 @@
           }
         }
       },
-
+    "refreshRequest": {
+        "type": "object",
+        "required": [
+          "refreshToken"
+        ],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJcsa15c1sa515csa54....."
+          }
+        }
+      },
+      "refreshResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "accessToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIs....."
+          },
+          "refreshToken": {
+            "type": "string",
+            "example": "eyJcsa15c1sa515csa54....."
+          }
+        }
+      },
+      "unauthorizedResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "message": "Unauthorized"
+        }
+      },
+      "verifyResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Verification email sent"
+              }
+            }
+          }
+        }
+      },
+      "currentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "code": {
+            "type": "integer",
+            "example": 200
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Goose"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "goose@track.com"
+              },
+              "avatarURL": {
+                "type": "string",
+                "example": "https://larik7.github.io/GooseTrack-Frontend/static/media/Goose@2x.3c0470b19aa18aaef0d8.png"
+              },
+              "birthday": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2023-06-09T22:07:46.170Z"
+              },
+              "phone": {
+                "type": "string",
+                "example": "+123564689"
+              },
+              "skype": {
+                "type": "string",
+                "example": "@Goose"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2023-06-09T22:07:46.176Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2023-06-09T22:17:38.953Z"
+              }
+            }
+          }
+        }
+      },
 
 
 
