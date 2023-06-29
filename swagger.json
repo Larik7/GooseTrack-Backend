@@ -1479,15 +1479,11 @@
       "RegistrationRequest": {
         "type": "object",
         "required": [
-          "name",
           "email",
-          "password"
-          ],
+          "password",
+          "name"
+        ],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name"
-          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -1497,6 +1493,26 @@
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Day of birthday in `YYYY-MM-DD` format",
+            "example": "2000-01-01"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "skype": {
+            "type": "string",
+            "description": "Skype"
+          },
+          "token": {
+            "type": "number"
           }
         }
       },
