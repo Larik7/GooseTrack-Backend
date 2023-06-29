@@ -4,7 +4,7 @@ const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getTasksPerMonth = async (req, res) => {
   const owner = req.user._id;
-  const { month, page = 1, limit = 1000 } = req.query;
+  const { month = "", page = 1, limit = 1000 } = req.query;
   const skip = (page - 1) * limit;
   
   const filter = { owner, date: { $regex: `^${month}`, $options: 'i' } };
