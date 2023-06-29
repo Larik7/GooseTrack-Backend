@@ -67,7 +67,7 @@ const verifyEmail = async (req, res) => {
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   console.log('accessToken:', accessToken);
 
-  res.redirect(`${FRONT_BASE_URL}/login/${accessToken}`);
+  res.redirect(`${FRONT_BASE_URL}/login`);
 };
 //----------------------------google-auth--------------------------------------------------
 const googleAuth = async (req, res) => {
@@ -80,7 +80,16 @@ const googleAuth = async (req, res) => {
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken, verify: true });
 
-  res.redirect(`${FRONT_BASE_URL}/login/${accessToken}`);
+  res
+    .status(200)
+    .json({
+      status: "success",
+      code: 200,
+      accessToken,
+      refreshToken,
+    })
+    .redirect(`${FRONT_BASE_URL}/login`);
+  
 };
 //----------------------------re-verify-email----------------------------------------------
 const resendVerifyEmail = async (req, res) => {
@@ -131,10 +140,10 @@ const login = async (req, res) => {
 
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   res.status(200).json({
-    status: 'success',
-    code: 200,
-    accessToken: accessToken,
-    refreshToken: refreshToken,
+    name:user.name,
+    email: user.email,
+    accessToken,
+    refreshToken,
   });
 };
 //------------------refresh------------------------------------
