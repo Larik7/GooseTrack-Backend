@@ -80,15 +80,7 @@ const googleAuth = async (req, res) => {
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken, verify: true });
 
-  res
-    .status(200)
-    .json({
-      status: "success",
-      code: 200,
-      accessToken,
-      refreshToken,
-    })
-    .redirect(`${FRONT_BASE_URL}/login`);
+  res.redirect(`${FRONT_BASE_URL}/login`);
   
 };
 //----------------------------re-verify-email----------------------------------------------
