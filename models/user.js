@@ -51,11 +51,11 @@ const userSchema = new Schema(
     refreshToken: { type: String, default: '' },
     avatarURL: {
       type: String,
-      default: '',
+      default: 'https://res.cloudinary.com/dmlihfe6w/image/upload/v1688097040/zj9xwm1wks27eqcq7p8v.jpg',
     },
     avatarID: {
       type: String,
-      default: '',
+      default: 'zj9xwm1wks27eqcq7p8v',
     },
     verify: {
       type: Boolean,
