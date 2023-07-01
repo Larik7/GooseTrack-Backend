@@ -2,7 +2,7 @@ const { Task } = require("../models/tasks");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const getTasksPerMonth = async (req, res) => {
+const getTasks = async (req, res) => {
   const owner = req.user._id;
   const { month = "", page = 1, limit = 1000 } = req.query;
   const skip = (page - 1) * limit;
@@ -42,7 +42,7 @@ const deleteTask = async (req, res) => {
 };
 
 module.exports = {
-  getTasksPerMonth: ctrlWrapper(getTasksPerMonth),
+  getTasks: ctrlWrapper(getTasks),
   addTask: ctrlWrapper(addTask),
   updateTask: ctrlWrapper(updateTask),
   deleteTask: ctrlWrapper(deleteTask),

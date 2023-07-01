@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.get("/", tasksController.getTasksPerMonth);
+router.get("/", tasksController.getTasks);
 
 router.post("/", validateBody(schemas.taskAddSchema), tasksController.addTask);
 
