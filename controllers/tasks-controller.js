@@ -2,13 +2,19 @@ const { Task } = require("../models/tasks");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-const getTasksPerMonth = async (req, res) => {
+const getTasks = async (req, res) => {
   const owner = req.user._id;
+  const { period = "", month = "" } = req.query;
   const { page = 1, limit = 1000 } = req.query;
   const skip = (page - 1) * limit;
-  
-  const filter = { owner };
+  const datefilter = period || month;
 
+  const filter = { owner };
+  
+  if (datefilter) {
+    filter.date = { $regex: `^${datefilter}`, $options: 'i' };
+  }
+  
   const result = await Task.find(filter, "-createdAt -updatedAt", { skip, limit }).populate("owner", "name");
   res.json(result);
 };
@@ -42,7 +48,7 @@ const deleteTask = async (req, res) => {
 };
 
 module.exports = {
-  getTasksPerMonth: ctrlWrapper(getTasksPerMonth),
+  getTasks: ctrlWrapper(getTasks),
   addTask: ctrlWrapper(addTask),
   updateTask: ctrlWrapper(updateTask),
   deleteTask: ctrlWrapper(deleteTask),
