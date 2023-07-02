@@ -1,5 +1,5 @@
 const express = require('express');
-const userCtrl = require('../../controllers/auth/user');
+const userCtrl = require('../../controllers/auth');
 const {
   validateBody,
   auth,

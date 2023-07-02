@@ -71,7 +71,7 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
-//----------------------------------------------------------------------
+
 
 const User = model('user', userSchema);
 
