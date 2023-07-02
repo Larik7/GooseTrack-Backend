@@ -13,7 +13,7 @@ const googleAuth = async (req, res) => {
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken, verify: true });
 
-  res.redirect(`${FRONT_BASE_URL}/login`);
+  res.redirect(`${FRONT_BASE_URL}/mainLayout`);
 };
   
 module.exports = googleAuth;
