@@ -26,7 +26,7 @@ const registration = async (req, res) => {
     <p>If you did not sign up for this account, you can ignore this email.</p>
     `;
 
-  if (EmailVerifycation.status !== true) {
+  if (EmailVerifycation.status === true) {
     await sendEmail(req.body.email, EmailVerifycation.title, htmlContent);
   }
 
