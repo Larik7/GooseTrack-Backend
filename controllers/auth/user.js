@@ -1,24 +1,23 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const path = require('path');
-const fs = require('fs/promises');
-const Jimp = require('jimp');
-const { nanoid } = require('nanoid');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const path = require("path");
+const fs = require("fs/promises");
+const Jimp = require("jimp");
+const { nanoid } = require("nanoid");
 
-const { cloudinary } = require('../../middlewares');
+const { cloudinary } = require("../../middlewares");
 
-const EmailVerifycation = { status: true, title: 'verifycation' }; //email settings
-const { User } = require('../../models/user');
-const { HttpError, ctrlWrapper, sendEmail } = require('../../helpers');
+const EmailVerifycation = { status: true, title: "verifycation" };
+const { User } = require("../../models/user");
+const { HttpError, ctrlWrapper, sendEmail } = require("../../helpers");
 const { BASE_URL, FRONT_BASE_URL, SECRET_KEY, REFRESH_SECRET_KEY } =
   process.env;
-const avatarDir = path.join(__dirname, '../', '../', 'public', 'avatars');
+const avatarDir = path.join(__dirname, "../", "../", "public", "avatars");
 
-//-----------------------------registration-------------------------------------------------------
 const registration = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (user) {
-    throw HttpError(409, 'such email is already exist');
+    throw HttpError(409, "such email is already exist");
   }
 
   const hashPassword = await bcrypt.hash(req.body.password, 10);
@@ -37,22 +36,20 @@ const registration = async (req, res) => {
     
 `;
 
-  if (EmailVerifycation.status == true) {
+  if (EmailVerifycation.status === true) {
     await sendEmail(req.body.email, EmailVerifycation.title, htmlContent);
   }
 
   res.status(201).json({
-    status: 'success',
-    code: 201,
     data: { name: newUser.name, email: newUser.email },
   });
 };
-//-----------------------------verify-email------------------------------------------------
+
 const verifyEmail = async (req, res) => {
   const verificationToken = req.params.verificationToken;
-  const user = await User.findOne({ verificationToken: verificationToken });
+  const user = await User.findOne({ verificationToken });
   if (!user) {
-    throw HttpError(404, 'not found');
+    throw HttpError(404, "not found");
   }
   await User.findByIdAndUpdate(user._id, {
     verificationToken: null,
@@ -60,38 +57,37 @@ const verifyEmail = async (req, res) => {
   });
 
   const payload = { id: user._id };
-  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: '7d',
+    expiresIn: "7d",
   });
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
-  console.log('accessToken:', accessToken);
+  console.log("accessToken:", accessToken);
 
   res.redirect(`${FRONT_BASE_URL}/login`);
 };
-//----------------------------google-auth--------------------------------------------------
+
 const googleAuth = async (req, res) => {
   const id = req.user._id;
   const payload = { id };
 
-  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: '7d',
+    expiresIn: "7d",
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken, verify: true });
 
   res.redirect(`${FRONT_BASE_URL}/login`);
-  
 };
-//----------------------------re-verify-email----------------------------------------------
+
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    throw HttpError(404, 'not found');
+    throw HttpError(404, "not found");
   }
   if (user.verify) {
-    throw HttpError(400, 'Verification has already been passed');
+    throw HttpError(400, "Verification has already been passed");
   }
 
   await sendEmail(
@@ -101,90 +97,84 @@ const resendVerifyEmail = async (req, res) => {
   );
 
   res.status(200).json({
-    status: 'success',
-    code: 200,
-    data: { message: 'Verification email sent' },
+    data: { message: "Verification email sent" },
   });
 };
-//-----------------------------login-------------------------------------------------------
+
 const login = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    throw HttpError(401, 'Email or password ivalid');
+    throw HttpError(401, "Email or password ivalid");
   }
 
   const passwordCompare = bcrypt.compareSync(req.body.password, user.password);
 
-  if (!user.verify && EmailVerifycation.status == true) {
-    throw HttpError(401, 'Email not verifyed');
+  if (!user.verify && EmailVerifycation.status === true) {
+    throw HttpError(401, "Email not verifyed");
   }
 
   if (!passwordCompare) {
-    throw HttpError(401, 'Email or password ivalid');
+    throw HttpError(401, "Email or password ivalid");
   }
 
   const payload = { id: user._id };
 
-  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: '7d',
+    expiresIn: "7d",
   });
 
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   res.status(200).json({
-    name:user.name,
+    name: user.name,
     email: user.email,
     accessToken,
     refreshToken,
   });
 };
-//------------------refresh------------------------------------
+
 const refresh = async (req, res) => {
   const { refreshToken: rToken } = req.body;
-  console.log('rToken:', rToken);
+  console.log("rToken:", rToken);
 
   try {
     const { id } = jwt.verify(rToken, REFRESH_SECRET_KEY);
-    console.log('id:', id);
+    console.log("id:", id);
     const isExist = await User.findOne({ refreshToken: rToken });
     if (!isExist) {
-      throw HttpError(403, 'token is not valid');
+      throw HttpError(403, "token is not valid");
     }
 
     const payload = { id };
 
-    const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+    const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: '7d',
+      expiresIn: "7d",
     });
 
     res.status(200).json({
-      status: 'success',
-      code: 200,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken,
+      refreshToken,
     });
   } catch (error) {
     throw HttpError(403, error.message);
   }
 };
-//------------------------------loginWithToken-------------------------------
+
 const loginWithToken = async (req, res) => {
   const accessToken = req.params.accessToken;
   const user = await User.findOne({
-    accessToken: accessToken,
+    accessToken,
   });
   if (!user) {
-    throw HttpError(401, 'Token is invalid');
+    throw HttpError(401, "Token is invalid");
   }
   res.status(200).json({
-    status: 'success',
-    code: 200,
-    accessToken: accessToken,
+    accessToken,
     refreshToken: user.refreshToken,
   });
 };
-//------------------------------current-----------------------------------------------------
+
 const current = async (req, res) => {
   const {
     name,
@@ -198,30 +188,26 @@ const current = async (req, res) => {
   } = req.user;
 
   res.status(200).json({
-    status: 'success',
-    code: 200,
-    user: {
-      name: name,
-      email: email,
-      avatarURL: avatarURL,
-      birthday: birthday,
-      phone: phone,
-      skype: skype,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    },
+    name,
+    email,
+    avatarURL,
+    birthday,
+    phone,
+    skype,
+    createdAt,
+    updatedAt,
   });
 };
-//------------------------------logout-----------------------------------------------------
+
 const logout = async (req, res) => {
   const { _id } = req.user;
 
-  await User.findByIdAndUpdate(_id, { accessToken: '', refreshToken: '' });
+  await User.findByIdAndUpdate(_id, { accessToken: "", refreshToken: "" });
   res.status(204).json();
 };
-//----------------------------------update-------------------------------------------
+
 const updateUser = async (req, res) => {
-  console.log('update');
+  console.log("update");
   const { _id } = req.user;
   let updatedUser = {};
 
@@ -240,28 +226,20 @@ const updateUser = async (req, res) => {
     const resultUpload = path.join(avatarDir, fileName);
 
     Jimp.read(tempUpload)
-      .then(avatar => {
-        return avatar
-          .resize(250, 250) // resize
-          .write(resultUpload); // save
+      .then((avatar) => {
+        return avatar.resize(250, 250).write(resultUpload);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
 
     await fs.unlink(tempUpload);
-    // console.log(fileName);
-    const avatarURL = path.join('avatars', fileName);
-    console.log(avatarURL);
-    updatedUser = { ...updatedUser, avatarURL };
-    await User.findByIdAndUpdate(_id, { avatarURL: avatarURL });
-  }
-  console.log('body');
-  console.log(req.body);
-  console.log('');
 
-  console.log('updatedUser');
-  console.log(updatedUser);
+    const avatarURL = path.join("avatars", fileName);
+
+    updatedUser = { ...updatedUser, avatarURL };
+    await User.findByIdAndUpdate(_id, { avatarURL });
+  }
 
   await User.findByIdAndUpdate(_id, { ...updatedUser });
   if (req.body.password) {
@@ -269,14 +247,12 @@ const updateUser = async (req, res) => {
   }
 
   res.status(200).json({
-    status: 'success',
-    code: 200,
     data: { updatedUser },
   });
 };
-//================================NEW=UPDATE======================================================
+
 const updateUserTwo = async (req, res) => {
-  console.log('update');
+  console.log("update");
   const { _id } = req.user;
   let updatedUser = {};
 
@@ -290,25 +266,18 @@ const updateUserTwo = async (req, res) => {
   }
 
   if (req.file) {
-    console.log(req.file);
-    const { path: tempUpload, originalname } = req.file;
+    const { path, originalname } = req.file;
     const fileName = `${_id}_${originalname}`;
 
-    const avatarURL = req.file.path;
-    const avatarID = req.file.filename;
+    const avatarURL = path;
+    const avatarID = fileName;
     if (req.user.avatarID) {
       await cloudinary.uploader.destroy(req.user.avatarID);
     }
-    console.log(avatarURL);
-    updatedUser = { ...updatedUser, avatarURL, avatarID };
-    await User.findByIdAndUpdate(_id, { avatarURL: avatarURL });
-  }
-  console.log('body');
-  console.log(req.body);
-  console.log('');
 
-  console.log('updatedUser');
-  console.log(updatedUser);
+    updatedUser = { ...updatedUser, avatarURL, avatarID };
+    await User.findByIdAndUpdate(_id, { avatarURL });
+  }
 
   await User.findByIdAndUpdate(_id, { ...updatedUser });
   if (req.body.password) {
@@ -316,32 +285,25 @@ const updateUserTwo = async (req, res) => {
   }
 
   res.status(200).json({
-    status: 'success',
-    code: 200,
     data: { updatedUser },
   });
 };
-//---------------------------------check-user-pass---------------------------------------
 
 const checkPass = async (req, res) => {
-  const { old_password, new_password } = req.body;
+  const { oldPassword, newPassword } = req.body;
 
-  const passwordCompare = bcrypt.compareSync(old_password, req.user.password);
+  const passwordCompare = bcrypt.compareSync(oldPassword, req.user.password);
 
   if (!passwordCompare) {
-    throw HttpError(400, 'invalid password');
+    throw HttpError(400, "invalid password");
   }
-  const hashPassword = await bcrypt.hash(new_password, 10);
+  const hashPassword = await bcrypt.hash(newPassword, 10);
   await User.findByIdAndUpdate(req.user.id, { password: hashPassword });
 
   res.status(200).json({
-    tatus: 'success',
-    code: 200,
     data: passwordCompare,
   });
 };
-
-//=======================================================================================
 
 module.exports = {
   registration: ctrlWrapper(registration),

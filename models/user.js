@@ -1,9 +1,9 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 const {
   EMAIL_REGEXP,
   PHONE_REGEXP,
   PASSWORD_REGEXP,
-} = require('../schemas/constants');
+} = require("../schemas/constants");
 /*
 "валідація форми:
 
@@ -18,19 +18,19 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      minLength: [2, 'must be min 2 sybols'],
-      maxLength: [28, 'maximum 25 symbols'],
-      required: [true, 'What`s your name?'],
+      minLength: [2, "must be min 2 sybols"],
+      maxLength: [28, "maximum 25 symbols"],
+      required: [true, "What`s your name?"],
     },
     password: {
       type: String,
       match: PASSWORD_REGEXP,
-      required: [true, 'Set password for user'],
+      required: [true, "Set password for user"],
     },
     email: {
       type: String,
       match: EMAIL_REGEXP,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
     },
     birthday: {
@@ -43,19 +43,20 @@ const userSchema = new Schema(
       default: null,
     },
     skype: {
-      maxLength: [16, 'maximum 16 symbols'],
+      maxLength: [16, "maximum 16 symbols"],
       type: String,
       default: null,
     },
-    accessToken: { type: String, default: '' },
-    refreshToken: { type: String, default: '' },
+    accessToken: { type: String, default: "" },
+    refreshToken: { type: String, default: "" },
     avatarURL: {
       type: String,
-      default: 'https://res.cloudinary.com/dmlihfe6w/image/upload/v1688097040/zj9xwm1wks27eqcq7p8v.jpg',
+      default:
+        "https://res.cloudinary.com/dmlihfe6w/image/upload/v1688097040/zj9xwm1wks27eqcq7p8v.jpg",
     },
     avatarID: {
       type: String,
-      default: 'zj9xwm1wks27eqcq7p8v',
+      default: "zj9xwm1wks27eqcq7p8v",
     },
     verify: {
       type: Boolean,
@@ -71,8 +72,7 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
-//----------------------------------------------------------------------
 
-const User = model('user', userSchema);
+const User = model("user", userSchema);
 
 module.exports = { User };

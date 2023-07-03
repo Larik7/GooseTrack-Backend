@@ -1,5 +1,5 @@
-const sendGridEmail = require('@sendgrid/mail');
-require('dotenv').config();
+const sendGridEmail = require("@sendgrid/mail");
+require("dotenv").config();
 const { SENDGRID_API_KEY, EMAIL } = process.env;
 
 sendGridEmail.setApiKey(SENDGRID_API_KEY);
@@ -9,7 +9,7 @@ const sendEmail = async (receiverEmail, subject, letter) => {
   const email = {
     to: receiverEmail,
     from: EMAIL,
-    subject: subject,
+    subject,
     html: letter,
   };
   console.log(email);
