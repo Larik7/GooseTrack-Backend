@@ -1,12 +1,12 @@
-const express = require('express');
-const userCtrl = require('../../controllers/auth/user');
+const express = require("express");
+const userCtrl = require("../../controllers/auth/user");
 const {
   validateBody,
   auth,
   uploder,
   uploadCloud,
   passport,
-} = require('../../middlewares');
+} = require("../../middlewares");
 const {
   registrationSchema,
   loginSchema,
@@ -14,59 +14,57 @@ const {
   updateUserSchema,
   refreshSchema,
   passSchema,
-} = require('../../schemas');
-
-//console.log(userCtrl);
+} = require("../../schemas");
 
 const router = express.Router();
-//------------------------google----------------------------------
+
 router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
 router.get(
-  '/google/callback',
-  passport.authenticate('google', { session: false }),
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
   userCtrl.googleAuth
 );
-//--------------------------------------------------------------------
+
 router.post(
-  '/registration',
+  "/registration",
   validateBody(registrationSchema),
   userCtrl.registration
 );
 
-router.post('/login', validateBody(loginSchema), userCtrl.login); //логінимось
+router.post("/login", validateBody(loginSchema), userCtrl.login);
 
-router.get('/login/:accessToken', userCtrl.loginWithToken);
+router.get("/login/:accessToken", userCtrl.loginWithToken);
 
-router.post('/refresh', validateBody(refreshSchema), userCtrl.refreshToken); // оновлюємо токен
+router.post("/refresh", validateBody(refreshSchema), userCtrl.refreshToken);
 
-router.get('/verify/:verificationToken', userCtrl.verifyEmail); //верефікація пошти
+router.get("/verify/:verificationToken", userCtrl.verifyEmail);
 
-router.post('/verify', validateBody(emailSchema), userCtrl.resendVerifyEmail);
+router.post("/verify", validateBody(emailSchema), userCtrl.resendVerifyEmail);
 
-router.get('/current', auth, userCtrl.getCurrent);
+router.get("/current", auth, userCtrl.getCurrent);
 
-router.post('/logout', auth, userCtrl.logout);
+router.post("/logout", auth, userCtrl.logout);
 
 router.patch(
-  '/user',
+  "/user",
   auth,
-  uploder.single('avatar'),
+  uploder.single("avatar"),
   validateBody(updateUserSchema),
   userCtrl.updateUserCloud
 );
 
 router.put(
-  '/user',
+  "/user",
   auth,
-  uploadCloud.single('avatar'),
+  uploadCloud.single("avatar"),
   validateBody(updateUserSchema),
   userCtrl.updateUserCloud
 );
 
-router.patch('/user/pass', auth, validateBody(passSchema), userCtrl.checkPass);
+router.patch("/user/pass", auth, validateBody(passSchema), userCtrl.checkPass);
 
 module.exports = router;
