@@ -42,12 +42,11 @@ const userSchema = new Schema(
     refreshToken: { type: String, default: "" },
     avatarURL: {
       type: String,
-      default:
-        "https://res.cloudinary.com/dmlihfe6w/image/upload/v1688097040/zj9xwm1wks27eqcq7p8v.jpg",
+      default: "",
     },
     avatarID: {
       type: String,
-      default: "zj9xwm1wks27eqcq7p8v",
+      default: "",
     },
     verify: {
       type: Boolean,
