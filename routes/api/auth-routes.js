@@ -1,5 +1,5 @@
 const express = require("express");
-const userCtrl = require("../../controllers/auth/user");
+const userCtrl = require("../../controllers/user-controller");
 const {
   validateBody,
   auth,
@@ -36,8 +36,6 @@ router.post(
 );
 
 router.post("/login", validateBody(loginSchema), userCtrl.login);
-
-router.get("/login/:accessToken", userCtrl.loginWithToken);
 
 router.post("/refresh", validateBody(refreshSchema), userCtrl.refreshToken);
 
