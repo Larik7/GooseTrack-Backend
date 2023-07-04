@@ -14,8 +14,6 @@ router.get("/", tasksController.getTasks);
 
 router.post("/", validateBody(schemas.taskAddSchema), tasksController.addTask);
 
-router.put("/:id", isValidId, validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
-
 router.patch("/:id", isValidId, validateBody(schemas.taskUpdateSchema), tasksController.updateTask);
 
 router.delete("/:id", isValidId, tasksController.deleteTask);

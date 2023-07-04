@@ -14,8 +14,6 @@ router.get("/own", auth, reviewsController.getReview);
 
 router.post("/own", auth, validateBody(schemas.reviewAddSchema), reviewsController.addReview);
 
-router.put("/own", auth, validateBody(schemas.reviewUpdateSchema), reviewsController.updateReview);
-
 router.patch("/own", auth, validateBody(schemas.reviewUpdateSchema), reviewsController.updateReview);
 
 router.delete("/own", auth, reviewsController.deleteReview);
