@@ -31,12 +31,7 @@
           "Auth"
         ],
         "summary": "User registration",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "requestBody": {
+          "requestBody": {
           "description": "Registration's object",
           "required": true,
           "content": {
@@ -117,12 +112,7 @@
           "Auth"
         ],
         "summary": "User login",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "requestBody": {
+          "requestBody": {
           "description": "Registration's object",
           "required": true,
           "content": {
@@ -1497,22 +1487,6 @@
           "name": {
             "type": "string",
             "description": "User's name"
-          },
-          "birthday": {
-            "type": "string",
-            "description": "Day of birthday in `YYYY-MM-DD` format",
-            "example": "2000-01-01"
-          },
-          "phone": {
-            "type": "string",
-            "description": "Phone number"
-          },
-          "skype": {
-            "type": "string",
-            "description": "Skype"
-          },
-          "token": {
-            "type": "number"
           }
         }
       },

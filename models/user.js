@@ -4,16 +4,7 @@ const {
   PHONE_REGEXP,
   PASSWORD_REGEXP,
 } = require("../schemas/constants");
-/*
-"валідація форми:
 
-аватар: тип файл
-юзерНейм: макс. 16символів | обов'язково
-емейл: емейл | обов'язково
-день народження: дата - YYYY-MM-DD
-телефон: +380971234567
-скайп: макс. 16 символів"
-*/
 const userSchema = new Schema(
   {
     name: {
@@ -64,7 +55,6 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      // required: [true, 'Verify token is required'],
     },
   },
   {

@@ -5,7 +5,7 @@ const {
   updateUserSchema,
   refreshSchema,
   passSchema,
-} = require('./user');
+} = require('./user-schemas');
 
 module.exports = {
   registrationSchema,

@@ -5,11 +5,11 @@ const fs = require("fs/promises");
 const Jimp = require("jimp");
 const { nanoid } = require("nanoid");
 
-const { cloudinary } = require("../../middlewares");
+const { cloudinary } = require("../middlewares");
 
 const EmailVerifycation = { status: true, title: "verifycation" };
-const { User } = require("../../models/user");
-const { HttpError, ctrlWrapper, sendEmail } = require("../../helpers");
+const { User } = require("../models/user");
+const { HttpError, ctrlWrapper, sendEmail } = require("../helpers");
 const { BASE_URL, FRONT_BASE_URL, SECRET_KEY, REFRESH_SECRET_KEY } =
   process.env;
 const avatarDir = path.join(__dirname, "../", "../", "public", "avatars");
