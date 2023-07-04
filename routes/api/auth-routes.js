@@ -3,7 +3,6 @@ const userCtrl = require("../../controllers/user-controller");
 const {
   validateBody,
   auth,
-  uploder,
   uploadCloud,
   passport,
 } = require("../../middlewares");
@@ -47,21 +46,7 @@ router.get("/current", auth, userCtrl.getCurrent);
 
 router.post("/logout", auth, userCtrl.logout);
 
-router.patch(
-  "/user",
-  auth,
-  uploder.single("avatar"),
-  validateBody(updateUserSchema),
-  userCtrl.updateUserCloud
-);
-
-router.put(
-  "/user",
-  auth,
-  uploadCloud.single("avatar"),
-  validateBody(updateUserSchema),
-  userCtrl.updateUserCloud
-);
+router.put("/user", auth, uploadCloud.single("avatar"), validateBody(updateUserSchema), userCtrl.updateUserCloud);
 
 router.patch("/user/pass", auth, validateBody(passSchema), userCtrl.checkPass);
 
