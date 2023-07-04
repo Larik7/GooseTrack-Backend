@@ -1,8 +1,5 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const path = require("path");
-const fs = require("fs/promises");
-const Jimp = require("jimp");
 const { nanoid } = require("nanoid");
 
 const { cloudinary } = require("../middlewares");
@@ -12,7 +9,6 @@ const { User } = require("../models/user");
 const { HttpError, ctrlWrapper, sendEmail } = require("../helpers");
 const { BASE_URL, FRONT_BASE_URL, SECRET_KEY, REFRESH_SECRET_KEY } =
   process.env;
-const avatarDir = path.join(__dirname, "../", "../", "public", "avatars");
 
 const registration = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
@@ -221,51 +217,6 @@ const updateUser = async (req, res) => {
   }
 
   if (req.file) {
-    const { path: tempUpload, originalname } = req.file;
-    const fileName = `${_id}_${originalname}`;
-    const resultUpload = path.join(avatarDir, fileName);
-
-    Jimp.read(tempUpload)
-      .then((avatar) => {
-        return avatar.resize(250, 250).write(resultUpload);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    await fs.unlink(tempUpload);
-
-    const avatarURL = path.join("avatars", fileName);
-
-    updatedUser = { ...updatedUser, avatarURL };
-    await User.findByIdAndUpdate(_id, { avatarURL });
-  }
-
-  await User.findByIdAndUpdate(_id, { ...updatedUser });
-  if (req.body.password) {
-    updatedUser = { ...updatedUser, password: req.body.password };
-  }
-
-  res.status(200).json({
-    data: { updatedUser },
-  });
-};
-
-const updateUserTwo = async (req, res) => {
-  console.log("update");
-  const { _id } = req.user;
-  let updatedUser = {};
-
-  if (req.body) {
-    if (req.body.password) {
-      const hashPassword = await bcrypt.hash(req.body.password, 10);
-      updatedUser = { ...req.body, password: hashPassword };
-    } else {
-      updatedUser = { ...req.body };
-    }
-  }
-
-  if (req.file) {
     const { path, originalname } = req.file;
     const fileName = `${_id}_${originalname}`;
 
@@ -311,8 +262,7 @@ module.exports = {
   loginWithToken: ctrlWrapper(loginWithToken),
   getCurrent: ctrlWrapper(current),
   logout: ctrlWrapper(logout),
-  updateUser: ctrlWrapper(updateUser),
-  updateUserCloud: ctrlWrapper(updateUserTwo),
+  updateUserCloud: ctrlWrapper(updateUser),
   verifyEmail: ctrlWrapper(verifyEmail),
   resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   googleAuth: ctrlWrapper(googleAuth),
