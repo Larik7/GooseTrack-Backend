@@ -73,7 +73,7 @@ const googleAuth = async (req, res) => {
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken, verify: true });
 
-  res.redirect(`${FRONT_BASE_URL}/login`);
+  res.redirect(`${FRONT_BASE_URL}/login/${accessToken}`);
 };
 
 const resendVerifyEmail = async (req, res) => {
@@ -184,6 +184,7 @@ const current = async (req, res) => {
   } = req.user;
 
   res.status(200).json({
+  user: {
     name,
     email,
     avatarURL,
@@ -192,6 +193,7 @@ const current = async (req, res) => {
     skype,
     createdAt,
     updatedAt,
+    },
   });
 };
 
